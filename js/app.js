@@ -36,8 +36,9 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+const deck = document.querySelector(".deck");
 
-function refreshCards() {
+function restartCards() {
 
   const element = document.querySelector(".deck");
   while (element.firstChild) {
@@ -45,7 +46,6 @@ function refreshCards() {
   }
 
   arr = shuffle(arr);
-  const deck = document.querySelector(".deck");
   for (let i = 0; i <= 15; i++) {
     const newLi = document.createElement("li");
     newLi.classList.add("card");
@@ -60,5 +60,17 @@ function refreshCards() {
 
 const restart = document.querySelector(".fa-repeat");
 restart.addEventListener("click", function() {
-  refreshCards();
+  restartCards();
+});
+
+let classNameofCard = "fa fa-diamond";
+deck.addEventListener("click", function(evt) {
+  evt.target.classList.add("open");
+  evt.target.classList.add("show");
+  console.log(evt.target.querySelector(".fa").className);
+  if (classNameOfCard == evt.target.querySelector(".fa").className) {
+    evt.target.classList.remove("open");
+    evt.target.classList.remove("show");
+    evt.target.classList.add("match");
+  }
 });
