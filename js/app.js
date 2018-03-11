@@ -37,7 +37,13 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-function generateCards() {
+function refreshCards() {
+
+  const element = document.querySelector(".deck");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
   arr = shuffle(arr);
   const deck = document.querySelector(".deck");
   for (let i = 0; i <= 15; i++) {
@@ -54,5 +60,5 @@ function generateCards() {
 
 const restart = document.querySelector(".fa-repeat");
 restart.addEventListener("click", function() {
-  generateCards();
+  refreshCards();
 });
