@@ -1,10 +1,10 @@
-// a list that holds all of your cards
-
+// Global Variables
 let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-twitter", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
 let selectedCard;
-const deck = document.querySelector(".deck");
+let moveNumber = 0;
+const elementDeck = document.querySelector(".deck");
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+// Shuffle Cards: from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -19,24 +19,13 @@ function shuffle(array) {
     return array;
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
 function shuffleCards() {
+  const elementDeck = document.querySelector(".deck");
   arr = shuffle(arr);
   for (let i = 0; i <= 15; i++) {
     const newLi = document.createElement("li");
     newLi.classList.add("card");
-    deck.appendChild(newLi);
+    elementDeck.appendChild(newLi);
     const newI = document.createElement("i");
     newI.classList.add("fa");
     newI.classList.add(arr[i]);
@@ -45,21 +34,22 @@ function shuffleCards() {
   }
 }
 
+// Start Game
 function startCards() {
     shuffleCards();
 }
 
 startCards();
 
+// Restart Game
 function restartCards() {
 
-  const element = document.querySelector(".deck");
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
+  const elementDeck = document.querySelector(".deck");
+  while (elementDeck.firstChild) {
+    elementDeck.removeChild(elementDeck.firstChild);
   }
 
   shuffleCards();
-
 }
 
 const restart = document.querySelector(".fa-repeat");
@@ -68,16 +58,34 @@ restart.addEventListener("click", function(evt) {
   restartCards();
 });
 
-deck.addEventListener("click", function(evt) {
+// Memory Game Logic
+elementDeck.addEventListener("click", function(evt) {
   evt.preventDefault();
   const target = evt.target;
+
+  // Move Counter
+  moveNumber = moveNumber + 1;
+  const moveNumberSpan = document.querySelector(".moves");
+  moveNumberSpan.textContent = moveNumber;
+
+  //Rate Stars
+  const elementStars = document.querySelector(".stars");
+  if (moveNumber == 25) {
+    elementStars.removeChild(elementStars.childNodes[0]);
+    elementStars.removeChild(elementStars.childNodes[0]);
+  } else if (moveNumber == 50) {
+    elementStars.removeChild(elementStars.childNodes[0]);
+    elementStars.removeChild(elementStars.childNodes[0]);
+  }
+
+  // Match Cards
   target.classList.add("open");
   target.classList.add("show");
   if (selectedCard == null) {
     selectedCard = target.querySelector(".fa").className;
   } else if (selectedCard == target.querySelector(".fa").className){
-    const firstSelectedCard = deck.getElementsByClassName(selectedCard)[0];
-    const secondSelectedCard = deck.getElementsByClassName(selectedCard)[1];
+    const firstSelectedCard = elementDeck.getElementsByClassName(selectedCard)[0];
+    const secondSelectedCard = elementDeck.getElementsByClassName(selectedCard)[1];
     firstSelectedCard.parentElement.classList.add("match");
     firstSelectedCard.parentElement.classList.remove("open");
     firstSelectedCard.parentElement.classList.remove("show");
@@ -86,8 +94,8 @@ deck.addEventListener("click", function(evt) {
     secondSelectedCard.parentElement.classList.remove("show");
     selectedCard = null;
   } else {
-    const firstSelectedCard = deck.getElementsByClassName(selectedCard)[0];
-    const secondSelectedCard = deck.getElementsByClassName(selectedCard)[1];
+    const firstSelectedCard = elementDeck.getElementsByClassName(selectedCard)[0];
+    const secondSelectedCard = elementDeck.getElementsByClassName(selectedCard)[1];
     setTimeout(function() {
       firstSelectedCard.parentElement.classList.remove("open");
       firstSelectedCard.parentElement.classList.remove("show");
@@ -98,4 +106,29 @@ deck.addEventListener("click", function(evt) {
     }, 800);
     selectedCard = null;
   }
+
+  //Congratulations Popup
+  const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
+  if (theNumberOfMatch == 16) {
+    Time();
+    const elementContainer = document.querySelector(".container");
+    while (elementContainer.firstChild) {
+      elementContainer.removeChild(elementContainer.firstChild)
+    }
+    const htmlTextToAdd = `<h1>Congratulations! You Won!</h1><p>It takes ${playTime} milliseconds!</p>`;
+    elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
+  }
 });
+
+//Start Timer
+let startingTime;
+elementDeck.addEventListener("click", function() {
+  startingTime = performance.now();
+}, {once: true});
+
+//Ending Time
+let endingTime, playTime;
+const Time = function () {
+  endingTime = performance.now();
+  playTime = endingTime - startingTime;
+}
