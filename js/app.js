@@ -1,15 +1,8 @@
-/*
- * Create a list that holds all of your cards
- */
-let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
-let selectedCard;
+// a list that holds all of your cards
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
+let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-twitter", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
+let selectedCard;
+const deck = document.querySelector(".deck");
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -37,15 +30,8 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-const deck = document.querySelector(".deck");
 
-function restartCards() {
-
-  const element = document.querySelector(".deck");
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-
+function shuffleCards() {
   arr = shuffle(arr);
   for (let i = 0; i <= 15; i++) {
     const newLi = document.createElement("li");
@@ -59,8 +45,25 @@ function restartCards() {
   }
 }
 
+function startCards() {
+    shuffleCards();
+}
+
+startCards();
+
+function restartCards() {
+
+  const element = document.querySelector(".deck");
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+
+  shuffleCards();
+
+}
+
 const restart = document.querySelector(".fa-repeat");
-restart.addEventListener("click", function() {
+restart.addEventListener("click", function(evt) {
   evt.preventDefault();
   restartCards();
 });
@@ -71,7 +74,6 @@ deck.addEventListener("click", function(evt) {
   target.classList.add("open");
   target.classList.add("show");
   if (selectedCard == null) {
-    evt.stopPropagation();
     selectedCard = target.querySelector(".fa").className;
   } else if (selectedCard == target.querySelector(".fa").className){
     const firstSelectedCard = deck.getElementsByClassName(selectedCard)[0];
