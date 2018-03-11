@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle"];
+let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
+let selectedCard;
 
 /*
  * Display the cards on the page
@@ -60,17 +61,39 @@ function restartCards() {
 
 const restart = document.querySelector(".fa-repeat");
 restart.addEventListener("click", function() {
+  evt.preventDefault();
   restartCards();
 });
 
-let classNameofCard = "fa fa-diamond";
 deck.addEventListener("click", function(evt) {
-  evt.target.classList.add("open");
-  evt.target.classList.add("show");
-  console.log(evt.target.querySelector(".fa").className);
-  if (classNameOfCard == evt.target.querySelector(".fa").className) {
-    evt.target.classList.remove("open");
-    evt.target.classList.remove("show");
-    evt.target.classList.add("match");
+  evt.preventDefault();
+  const target = evt.target;
+  target.classList.add("open");
+  target.classList.add("show");
+  if (selectedCard == null) {
+    evt.stopPropagation();
+    selectedCard = target.querySelector(".fa").className;
+  } else if (selectedCard == target.querySelector(".fa").className){
+    const firstSelectedCard = deck.getElementsByClassName(selectedCard)[0];
+    const secondSelectedCard = deck.getElementsByClassName(selectedCard)[1];
+    firstSelectedCard.parentElement.classList.add("match");
+    firstSelectedCard.parentElement.classList.remove("open");
+    firstSelectedCard.parentElement.classList.remove("show");
+    secondSelectedCard.parentElement.classList.add("match");
+    secondSelectedCard.parentElement.classList.remove("open");
+    secondSelectedCard.parentElement.classList.remove("show");
+    selectedCard = null;
+  } else {
+    const firstSelectedCard = deck.getElementsByClassName(selectedCard)[0];
+    const secondSelectedCard = deck.getElementsByClassName(selectedCard)[1];
+    setTimeout(function() {
+      firstSelectedCard.parentElement.classList.remove("open");
+      firstSelectedCard.parentElement.classList.remove("show");
+      secondSelectedCard.parentElement.classList.remove("open");
+      secondSelectedCard.parentElement.classList.remove("show");
+      target.classList.remove("open");
+      target.classList.remove("show");
+    }, 800);
+    selectedCard = null;
   }
 });
