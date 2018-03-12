@@ -63,6 +63,9 @@ elementDeck.addEventListener("click", function(evt) {
   evt.preventDefault();
   const target = evt.target;
 
+  // Disable Mouse Click
+  elementDeck.classList.add("disClick");
+
   // Move Counter
   moveNumber = moveNumber + 1;
   const moveNumberSpan = document.querySelector(".moves");
@@ -103,7 +106,7 @@ elementDeck.addEventListener("click", function(evt) {
       secondSelectedCard.parentElement.classList.remove("show");
       target.classList.remove("open");
       target.classList.remove("show");
-    }, 800);
+    }, 400);
     selectedCard = null;
   }
 
@@ -118,6 +121,11 @@ elementDeck.addEventListener("click", function(evt) {
     const htmlTextToAdd = `<h1>Congratulations! You Won!</h1><p>It takes ${playTime} milliseconds!</p>`;
     elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
   }
+
+  // Enable Mouse Click
+  setTimeout(function() {
+    elementDeck.classList.remove("disClick");
+  }, 400);
 });
 
 //Start Timer
