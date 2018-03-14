@@ -99,14 +99,20 @@ elementDeck.addEventListener("click", function(evt) {
   } else {
     const firstSelectedCard = elementDeck.getElementsByClassName(selectedCard)[0];
     const secondSelectedCard = elementDeck.getElementsByClassName(selectedCard)[1];
+    firstSelectedCard.parentElement.classList.add("shake");
+    secondSelectedCard.parentElement.classList.add("shake");
     setTimeout(function() {
       firstSelectedCard.parentElement.classList.remove("open");
       firstSelectedCard.parentElement.classList.remove("show");
+      firstSelectedCard.parentElement.classList.remove("shake");
       secondSelectedCard.parentElement.classList.remove("open");
       secondSelectedCard.parentElement.classList.remove("show");
+      secondSelectedCard.parentElement.classList.remove("shake");
       target.classList.remove("open");
       target.classList.remove("show");
     }, 400);
+    // firstSelectedCard.parentElement.classList.remove("shake");
+    // secondSelectedCard.parentElement.classList.remove("shake");
     selectedCard = null;
   }
 
