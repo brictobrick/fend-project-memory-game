@@ -29,8 +29,8 @@ function shuffleCards() {
     const newI = document.createElement("i");
     newI.classList.add("fa");
     newI.classList.add(arr[i]);
-    const card = document.querySelectorAll(".card");
-    card[i].appendChild(newI);
+    const elemCard = document.querySelectorAll(".card");
+    elemCard[i].appendChild(newI);
   }
 }
 
@@ -85,35 +85,33 @@ elementDeck.addEventListener("click", function(evt) {
   target.classList.add("open");
   target.classList.add("show");
   if (selectedCard == null) {
-    selectedCard = target.querySelector(".fa").className;
-  } else if (selectedCard == target.querySelector(".fa").className){
-    const firstSelectedCard = elementDeck.getElementsByClassName(selectedCard)[0];
-    const secondSelectedCard = elementDeck.getElementsByClassName(selectedCard)[1];
-    firstSelectedCard.parentElement.classList.add("match");
-    firstSelectedCard.parentElement.classList.remove("open");
-    firstSelectedCard.parentElement.classList.remove("show");
-    secondSelectedCard.parentElement.classList.add("match");
-    secondSelectedCard.parentElement.classList.remove("open");
-    secondSelectedCard.parentElement.classList.remove("show");
+    selectedCard = target.children[0].className.split(" ")[1];
+  } else if (selectedCard == target.children[0].className.split(" ")[1]) {
+    for (let i=0; i<=1; i++) {
+      elementDeck.querySelectorAll(".open")[i].classList.add("match");
+      elementDeck.querySelectorAll(".open")[i].classList.add("jump");
+    }
+    for (let i=0; i<=15; i++) {
+      const elemCard = document.querySelectorAll(".card")[i];
+      elemCard.classList.remove("open");
+      elemCard.classList.remove("show");
+    }
     selectedCard = null;
   } else {
-    const firstSelectedCard = elementDeck.getElementsByClassName(selectedCard)[0];
-    const secondSelectedCard = elementDeck.getElementsByClassName(selectedCard)[1];
-    firstSelectedCard.parentElement.classList.add("shake");
-    secondSelectedCard.parentElement.classList.add("shake");
+    for (let i=0; i<=1; i++) {
+      elementDeck.querySelectorAll(".open")[i].classList.add("shake");
+    }
     setTimeout(function() {
-      firstSelectedCard.parentElement.classList.remove("open");
-      firstSelectedCard.parentElement.classList.remove("show");
-      firstSelectedCard.parentElement.classList.remove("shake");
-      secondSelectedCard.parentElement.classList.remove("open");
-      secondSelectedCard.parentElement.classList.remove("show");
-      secondSelectedCard.parentElement.classList.remove("shake");
       target.classList.remove("open");
       target.classList.remove("show");
+      for (let i=0; i<=1; i++) {
+        elementDeck.querySelectorAll(".shake")[i].classList.remove("open");
+        elementDeck.querySelectorAll(".shake")[i].classList.remove("show");
+      }
+      target.classList.remove("shake");
+      elementDeck.querySelector(".shake").classList.remove("shake");
+      selectedCard = null;
     }, 400);
-    // firstSelectedCard.parentElement.classList.remove("shake");
-    // secondSelectedCard.parentElement.classList.remove("shake");
-    selectedCard = null;
   }
 
   //Congratulations Popup
@@ -124,14 +122,18 @@ elementDeck.addEventListener("click", function(evt) {
     while (elementContainer.firstChild) {
       elementContainer.removeChild(elementContainer.firstChild)
     }
-    const htmlTextToAdd = `<h1>Congratulations! You Won!</h1><p>It takes ${playTime} milliseconds!</p>`;
+    const htmlTextToAdd = `
+      <div class="cong-container">
+        <h1>Congratulations! You Won!</h1>
+        <p>It takes ${playTime} milliseconds!</p>
+      </div>`;
     elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
   }
 
   // Enable Mouse Click
   setTimeout(function() {
     elementDeck.classList.remove("disClick");
-  }, 400);
+  }, 300);
 });
 
 //Start Timer
@@ -146,3 +148,5 @@ const Time = function () {
   endingTime = performance.now();
   playTime = endingTime - startingTime;
 }
+
+// Stopwatch from https://codepen.io/_Billy_Brown/pen/dbJeh
