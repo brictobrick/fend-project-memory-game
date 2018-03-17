@@ -85,6 +85,7 @@ elemDeck.addEventListener("click", function(evt) {
       }
       selectedCard = null;
     } else {
+      elemDeck.classList.add("disClick");
       for (let i=0; i<=1; i++) {
         elemDeck.querySelectorAll(".open")[i].classList.add("shake");
       }
@@ -98,7 +99,8 @@ elemDeck.addEventListener("click", function(evt) {
         target.classList.remove("shake");
         elemDeck.querySelector(".shake").classList.remove("shake");
         selectedCard = null;
-      }, 400);
+        elemDeck.classList.remove("disClick");
+      }, 300);
     }
 
     // Congratulations Popup
@@ -112,7 +114,7 @@ elemDeck.addEventListener("click", function(evt) {
       const htmlTextToAdd = `
         <div class="cong-container">
           <h1>Congratulations! You Won!</h1>
-          <p>It takes ${moveNumber} moves and ${currentTime} minutes!</p>
+          <p>It takes ${moveNumber} moves and ${currentTime} seconds!</p>
           <input type="button" onclick="window.location.reload()" value="Play Again">
         </div>`;
       elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
