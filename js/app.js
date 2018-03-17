@@ -104,7 +104,7 @@ elementDeck.addEventListener("click", function(evt) {
     // Congratulations Popup
     const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
     if (theNumberOfMatch == 16) {
-      Time();
+      clearTimeout(t);
       const elementContainer = document.querySelector(".container");
       while (elementContainer.firstChild) {
         elementContainer.removeChild(elementContainer.firstChild)
@@ -112,7 +112,7 @@ elementDeck.addEventListener("click", function(evt) {
       const htmlTextToAdd = `
         <div class="cong-container">
           <h1>Congratulations! You Won!</h1>
-          <p>It takes ${moveNumber} moves and ${playTime} milliseconds!</p>
+          <p>It takes ${moveNumber} moves and ${currentTime} minutes!</p>
           <input type="button" onclick="window.location.reload()" value="Play Again">
         </div>`;
       elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
@@ -120,7 +120,7 @@ elementDeck.addEventListener("click", function(evt) {
   }
 });
 
-
+// Start Timer
 elementDeck.addEventListener("click", startTimer, {once: true});
 function startTimer(evt) {
   evt.preventDefault();
@@ -129,7 +129,7 @@ function startTimer(evt) {
 
 // Timer from https://jsfiddle.net/pvk6p/2996/
 const time = document.querySelector(".time");
-let = seconds = 0, minutes = 0;
+let = seconds = 0, minutes = 0, currentTime = 0;
 
 function add() {
     seconds++;
@@ -138,29 +138,12 @@ function add() {
         minutes++;
     }
 
-    time.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    currentTime = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+    time.textContent = currentTime;
 
     timer();
 }
 
 function timer() {
-    setTimeout(add, 1000);
-}
-
-
-
-
-
-
-//Start Timer
-let startingTime;
-elementDeck.addEventListener("click", function() {
-  startingTime = performance.now();
-}, {once: true});
-
-//Ending Time
-let endingTime, playTime;
-const Time = function () {
-  endingTime = performance.now();
-  playTime = endingTime - startingTime;
+    t = setTimeout(add, 1000);
 }
