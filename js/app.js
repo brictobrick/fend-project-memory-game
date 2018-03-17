@@ -41,21 +41,6 @@ function startCards() {
 
 startCards();
 
-// Restart Game
-function restartCards() {
-
-  const elementDeck = document.querySelector(".deck");
-  while (elementDeck.firstChild) {
-    elementDeck.removeChild(elementDeck.firstChild);
-  }
-
-  shuffleCards();
-
-  time.textContent = "00:00";
-  seconds = 0; minutes = 0;
-  timer();
-}
-
 const restart = document.querySelector(".fa-repeat");
 restart.addEventListener("click", function(evt) {
   evt.preventDefault();
