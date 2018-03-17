@@ -1,7 +1,7 @@
 // Global Variables
 let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-twitter", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
-let selectedCard;
-let moveNumber = 0;
+let selectedCard,
+    moveNumber = 0;
 const elementDeck = document.querySelector(".deck");
 
 // Shuffle Cards: from http://stackoverflow.com/a/2450976
@@ -50,6 +50,10 @@ function restartCards() {
   }
 
   shuffleCards();
+
+  time.textContent = "00:00";
+  seconds = 0; minutes = 0;
+  timer();
 }
 
 const restart = document.querySelector(".fa-repeat");
@@ -69,7 +73,7 @@ elementDeck.addEventListener("click", function(evt) {
     const moveNumberSpan = document.querySelector(".moves");
     moveNumberSpan.textContent = moveNumber;
 
-    //Rate Stars
+    // Rate Stars
     const elementStars = document.querySelector(".stars");
     if (moveNumber == 25) {
       elementStars.removeChild(elementStars.childNodes[0]);
@@ -112,7 +116,7 @@ elementDeck.addEventListener("click", function(evt) {
       }, 400);
     }
 
-    //Congratulations Popup
+    // Congratulations Popup
     const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
     if (theNumberOfMatch == 16) {
       Time();
@@ -131,6 +135,38 @@ elementDeck.addEventListener("click", function(evt) {
   }
 });
 
+
+elementDeck.addEventListener("click", startTimer, {once: true});
+function startTimer(evt) {
+  evt.preventDefault();
+  timer();
+}
+
+// Timer from https://jsfiddle.net/pvk6p/2996/
+const time = document.querySelector(".time");
+let = seconds = 0, minutes = 0;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+    }
+
+    time.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
+}
+
+function timer() {
+    setTimeout(add, 1000);
+}
+
+
+
+
+
+
 //Start Timer
 let startingTime;
 elementDeck.addEventListener("click", function() {
@@ -143,5 +179,3 @@ const Time = function () {
   endingTime = performance.now();
   playTime = endingTime - startingTime;
 }
-
-// Stopwatch from https://codepen.io/_Billy_Brown/pen/dbJeh

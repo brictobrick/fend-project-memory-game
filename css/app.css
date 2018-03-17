@@ -124,6 +124,10 @@ h1 {
  * Styles for the Score Panel
  */
 
+.time {
+  margin: 0 5px 0 0;
+}
+
 .score-panel {
     text-align: left;
     width: 345px;
@@ -134,7 +138,7 @@ h1 {
     margin: 0;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
+    margin: 0 0 0 5px;
 }
 
 .score-panel .stars li {
