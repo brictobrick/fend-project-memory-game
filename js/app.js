@@ -2,7 +2,7 @@
 let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-twitter", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
 let selectedCard,
     moveNumber = 0;
-const elementDeck = document.querySelector(".deck");
+const elemDeck = document.querySelector(".deck");
 
 // Shuffle Cards: from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -20,12 +20,12 @@ function shuffle(array) {
 }
 
 function shuffleCards() {
-  const elementDeck = document.querySelector(".deck");
+  const elemDeck = document.querySelector(".deck");
   arr = shuffle(arr);
   for (let i = 0; i <= 15; i++) {
     const newLi = document.createElement("li");
     newLi.classList.add("card");
-    elementDeck.appendChild(newLi);
+    elemDeck.appendChild(newLi);
     const newI = document.createElement("i");
     newI.classList.add("fa");
     newI.classList.add(arr[i]);
@@ -48,7 +48,7 @@ restart.addEventListener("click", function(evt) {
 });
 
 // Memory Game Logic
-elementDeck.addEventListener("click", function(evt) {
+elemDeck.addEventListener("click", function(evt) {
   evt.preventDefault();
   const target = evt.target;
   if (target.className === "card") {
@@ -59,13 +59,13 @@ elementDeck.addEventListener("click", function(evt) {
     moveNumberSpan.textContent = moveNumber;
 
     // Rate Stars
-    const elementStars = document.querySelector(".stars");
+    const elemStars = document.querySelector(".stars");
     if (moveNumber == 25) {
-      elementStars.removeChild(elementStars.childNodes[0]);
-      elementStars.removeChild(elementStars.childNodes[0]);
+      elemStars.removeChild(elemStars.childNodes[0]);
+      elemStars.removeChild(elemStars.childNodes[0]);
     } else if (moveNumber == 50) {
-      elementStars.removeChild(elementStars.childNodes[0]);
-      elementStars.removeChild(elementStars.childNodes[0]);
+      elemStars.removeChild(elemStars.childNodes[0]);
+      elemStars.removeChild(elemStars.childNodes[0]);
     }
 
     // Match Cards
@@ -75,8 +75,8 @@ elementDeck.addEventListener("click", function(evt) {
       selectedCard = target.children[0].className.split(" ")[1];
     } else if (selectedCard == target.children[0].className.split(" ")[1]) {
       for (let i=0; i<=1; i++) {
-        elementDeck.querySelectorAll(".open")[i].classList.add("match");
-        elementDeck.querySelectorAll(".open")[i].classList.add("jump");
+        elemDeck.querySelectorAll(".open")[i].classList.add("match");
+        elemDeck.querySelectorAll(".open")[i].classList.add("jump");
       }
       for (let i=0; i<=15; i++) {
         const elemCard = document.querySelectorAll(".card")[i];
@@ -86,23 +86,23 @@ elementDeck.addEventListener("click", function(evt) {
       selectedCard = null;
     } else {
       for (let i=0; i<=1; i++) {
-        elementDeck.querySelectorAll(".open")[i].classList.add("shake");
+        elemDeck.querySelectorAll(".open")[i].classList.add("shake");
       }
       setTimeout(function() {
         target.classList.remove("open");
         target.classList.remove("show");
         for (let i=0; i<=1; i++) {
-          elementDeck.querySelectorAll(".shake")[i].classList.remove("open");
-          elementDeck.querySelectorAll(".shake")[i].classList.remove("show");
+          elemDeck.querySelectorAll(".shake")[i].classList.remove("open");
+          elemDeck.querySelectorAll(".shake")[i].classList.remove("show");
         }
         target.classList.remove("shake");
-        elementDeck.querySelector(".shake").classList.remove("shake");
+        elemDeck.querySelector(".shake").classList.remove("shake");
         selectedCard = null;
       }, 400);
     }
 
     // Congratulations Popup
-    const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
+    const theNumberOfMatch = elemDeck.querySelectorAll(".match").length;
     if (theNumberOfMatch == 16) {
       clearTimeout(t);
       const elementContainer = document.querySelector(".container");
@@ -121,7 +121,7 @@ elementDeck.addEventListener("click", function(evt) {
 });
 
 // Start Timer
-elementDeck.addEventListener("click", startTimer, {once: true});
+elemDeck.addEventListener("click", startTimer, {once: true});
 function startTimer(evt) {
   evt.preventDefault();
   timer();
