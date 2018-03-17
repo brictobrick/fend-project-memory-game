@@ -64,9 +64,6 @@ elementDeck.addEventListener("click", function(evt) {
   const target = evt.target;
   if (target.className === "card") {
 
-    // Disable Mouse Click
-    elementDeck.classList.add("disClick");
-
     // Move Counter
     moveNumber = moveNumber + 1;
     const moveNumberSpan = document.querySelector(".moves");
@@ -130,11 +127,6 @@ elementDeck.addEventListener("click", function(evt) {
         </div>`;
       elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
     }
-
-    // Enable Mouse Click
-    setTimeout(function() {
-      elementDeck.classList.remove("disClick");
-    }, 300);
   }
 });
 
