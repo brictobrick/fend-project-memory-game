@@ -3,8 +3,8 @@
 ## Table of Contents
 
 * [Contributing](#contributing)
-* [Built With](#built with)
-* [Authors](#built with)
+* [Built With](#built%20with)
+* [Authors](#Authors)
 
 ## Contributing
 
@@ -17,4 +17,4 @@ This repository is for personal project. It's always welcome for you to make som
 
 ## Authors
 
-* Brictobrick
+* [Brictobrick](https://github.com/brictobrick)
