@@ -123,7 +123,7 @@ elementDeck.addEventListener("click", function(evt) {
       const htmlTextToAdd = `
         <div class="cong-container">
           <h1>Congratulations! You Won!</h1>
-          <p>It takes ${playTime} milliseconds!</p>
+          <p>It takes ${moveNumber} moves and ${playTime} milliseconds!</p>
           <input type="button" onclick="window.location.reload()" value="Play Again">
         </div>`;
       elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
