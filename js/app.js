@@ -62,78 +62,80 @@ restart.addEventListener("click", function(evt) {
 elementDeck.addEventListener("click", function(evt) {
   evt.preventDefault();
   const target = evt.target;
+  if (target.className === "card") {
 
-  // Disable Mouse Click
-  elementDeck.classList.add("disClick");
+    // Disable Mouse Click
+    elementDeck.classList.add("disClick");
 
-  // Move Counter
-  moveNumber = moveNumber + 1;
-  const moveNumberSpan = document.querySelector(".moves");
-  moveNumberSpan.textContent = moveNumber;
+    // Move Counter
+    moveNumber = moveNumber + 1;
+    const moveNumberSpan = document.querySelector(".moves");
+    moveNumberSpan.textContent = moveNumber;
 
-  //Rate Stars
-  const elementStars = document.querySelector(".stars");
-  if (moveNumber == 25) {
-    elementStars.removeChild(elementStars.childNodes[0]);
-    elementStars.removeChild(elementStars.childNodes[0]);
-  } else if (moveNumber == 50) {
-    elementStars.removeChild(elementStars.childNodes[0]);
-    elementStars.removeChild(elementStars.childNodes[0]);
-  }
-
-  // Match Cards
-  target.classList.add("open");
-  target.classList.add("show");
-  if (selectedCard == null) {
-    selectedCard = target.children[0].className.split(" ")[1];
-  } else if (selectedCard == target.children[0].className.split(" ")[1]) {
-    for (let i=0; i<=1; i++) {
-      elementDeck.querySelectorAll(".open")[i].classList.add("match");
-      elementDeck.querySelectorAll(".open")[i].classList.add("jump");
+    //Rate Stars
+    const elementStars = document.querySelector(".stars");
+    if (moveNumber == 25) {
+      elementStars.removeChild(elementStars.childNodes[0]);
+      elementStars.removeChild(elementStars.childNodes[0]);
+    } else if (moveNumber == 50) {
+      elementStars.removeChild(elementStars.childNodes[0]);
+      elementStars.removeChild(elementStars.childNodes[0]);
     }
-    for (let i=0; i<=15; i++) {
-      const elemCard = document.querySelectorAll(".card")[i];
-      elemCard.classList.remove("open");
-      elemCard.classList.remove("show");
-    }
-    selectedCard = null;
-  } else {
-    for (let i=0; i<=1; i++) {
-      elementDeck.querySelectorAll(".open")[i].classList.add("shake");
-    }
-    setTimeout(function() {
-      target.classList.remove("open");
-      target.classList.remove("show");
+
+    // Match Cards
+    target.classList.add("open");
+    target.classList.add("show");
+    if (selectedCard == null) {
+      selectedCard = target.children[0].className.split(" ")[1];
+    } else if (selectedCard == target.children[0].className.split(" ")[1]) {
       for (let i=0; i<=1; i++) {
-        elementDeck.querySelectorAll(".shake")[i].classList.remove("open");
-        elementDeck.querySelectorAll(".shake")[i].classList.remove("show");
+        elementDeck.querySelectorAll(".open")[i].classList.add("match");
+        elementDeck.querySelectorAll(".open")[i].classList.add("jump");
       }
-      target.classList.remove("shake");
-      elementDeck.querySelector(".shake").classList.remove("shake");
+      for (let i=0; i<=15; i++) {
+        const elemCard = document.querySelectorAll(".card")[i];
+        elemCard.classList.remove("open");
+        elemCard.classList.remove("show");
+      }
       selectedCard = null;
-    }, 400);
-  }
-
-  //Congratulations Popup
-  const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
-  if (theNumberOfMatch == 16) {
-    Time();
-    const elementContainer = document.querySelector(".container");
-    while (elementContainer.firstChild) {
-      elementContainer.removeChild(elementContainer.firstChild)
+    } else {
+      for (let i=0; i<=1; i++) {
+        elementDeck.querySelectorAll(".open")[i].classList.add("shake");
+      }
+      setTimeout(function() {
+        target.classList.remove("open");
+        target.classList.remove("show");
+        for (let i=0; i<=1; i++) {
+          elementDeck.querySelectorAll(".shake")[i].classList.remove("open");
+          elementDeck.querySelectorAll(".shake")[i].classList.remove("show");
+        }
+        target.classList.remove("shake");
+        elementDeck.querySelector(".shake").classList.remove("shake");
+        selectedCard = null;
+      }, 400);
     }
-    const htmlTextToAdd = `
-      <div class="cong-container">
-        <h1>Congratulations! You Won!</h1>
-        <p>It takes ${playTime} milliseconds!</p>
-      </div>`;
-    elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
-  }
 
-  // Enable Mouse Click
-  setTimeout(function() {
-    elementDeck.classList.remove("disClick");
-  }, 300);
+    //Congratulations Popup
+    const theNumberOfMatch = elementDeck.querySelectorAll(".match").length;
+    if (theNumberOfMatch == 16) {
+      Time();
+      const elementContainer = document.querySelector(".container");
+      while (elementContainer.firstChild) {
+        elementContainer.removeChild(elementContainer.firstChild)
+      }
+      const htmlTextToAdd = `
+        <div class="cong-container">
+          <h1>Congratulations! You Won!</h1>
+          <p>It takes ${playTime} milliseconds!</p>
+        </div>`;
+      elementContainer.insertAdjacentHTML('afterbegin', htmlTextToAdd);
+    }
+
+    // Enable Mouse Click
+    setTimeout(function() {
+      elementDeck.classList.remove("disClick");
+    }, 300);
+  }
 });
 
 //Start Timer
