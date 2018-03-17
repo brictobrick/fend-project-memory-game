@@ -3,8 +3,8 @@
 ## Table of Contents
 
 * [Contributing](#contributing)
-* [Built With](#built%20with)
-* [Authors](#Authors)
+* [Built With](#built-with)
+* [Authors](#authors)
 
 ## Contributing
 
