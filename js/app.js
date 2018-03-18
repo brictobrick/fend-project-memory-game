@@ -2,7 +2,7 @@
     'use strict';
 
     // Global Variables
-    let arr = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt", "fa-cube", "fa-anchor", "fa-leaf", "fa-bicycle", "fa-diamond", "fa-paper-plane-o", "fa-twitter", "fa-bolt", "fa-cube", "fa-twitter", "fa-leaf", "fa-bicycle"];
+    let arr = ["fa-btc", "fa-btc", "fa-whatsapp", "fa-whatsapp", "fa-tumblr", "fa-tumblr", "fa-text-width", "fa-text-width", "fa-krw", "fa-krw", "fa-windows", "fa-windows", "fa-bold", "fa-bold", "fa-twitter", "fa-twitter"];
     let selectedCard, moveNumber = 0;
     const elemDeck = document.querySelector(".deck");
 
